@@ -33,7 +33,10 @@ func main() {
 	startTime := time.Now()
 
 	list := getList(dict)
-	fmt.Printf("\n"+time.Now().Format("15:04:05")+" -- Scan started on %s with %s\n\n", target, dict)
+	fmt.Printf("\nTARGET : %s\n", target)
+	fmt.Printf("DICT : %s\n", dict)
+	fmt.Println("START TIME : " + time.Now().Format("15:04:05"))
+	fmt.Printf("-- Scan started\n\n")
 
 	if multiThreads {
 		firstPart := list[:(len(list) / 2)]
@@ -51,7 +54,7 @@ func main() {
 	}
 
 	elapsedTime := time.Now().Sub(startTime)
-	fmt.Printf("\nScan terminated in %v\n", elapsedTime)
+	fmt.Printf("\n-- Scan terminated in %v\n", elapsedTime)
 }
 
 func contact(target string) (int, error) {
