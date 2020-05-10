@@ -64,6 +64,7 @@ func contact(target string) (int, error) {
 	return resp.StatusCode, nil
 }
 
+// displayResults only processes the statusCode to display the result in a specific color
 func displayResult(statusCode int, target, url string, v bool) {
 	if statusCode >= 400 && statusCode <= 499 && v == true {
 		color.Red("%v : %s is not present\n", statusCode, target+url)
@@ -74,6 +75,7 @@ func displayResult(statusCode int, target, url string, v bool) {
 	}
 }
 
+// getList creates and returns a string array based on the filename given in parameter
 func getList(siteType string) []string {
 	file, err := os.Open("lists/" + siteType + ".txt")
 
@@ -94,6 +96,8 @@ func getList(siteType string) []string {
 	return listlines
 }
 
+// checkURL is the core function : it calls contact to perform a GET request to the provided target with a specific path,
+// then calls displayResults.
 func checkURL(givenList []string, target string, verbose bool) {
 	if multiThreads {
 		defer wg.Done()
