@@ -32,3 +32,6 @@ This tool uses lists which are inside the `lists/` folder.
 The lists used here are from [github.com/danielmiessler/SecLists](github.com/danielmiessler/SecLists). You should definitely check his GitHub repo for a lot more lists for different purposes.
 
 You can add your own lists by copying them inside the `lists/` folder. They have to be .txt.
+
+## Notes
+If this program doesn't fit your need, you should try [dirb](https://tools.kali.org/web-applications/dirb).
