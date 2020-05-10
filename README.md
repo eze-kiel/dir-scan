@@ -5,16 +5,11 @@ dir-scan is a multi threads web content scanner. It launches a dictionnary-based
 
 ## Usage
 ```
--target <URL>
+-t <URL>
     The target's URL
 
--type <TYPE>
-    The type of scan. Values can be : 
-        wp (for WordPress)
-        common (for standard names)
-        joomla (for Joomla websites)
-        apache (for Apache web servers)
-        linuxfiles (for interesting Linux files. Warning : > 87.000 lines, it is a long scan !)
+-d <PATH TO DICT>
+   Dictionnary's path
 
 -v
     Verbose mode (display 404 status codes)

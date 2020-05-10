@@ -17,23 +17,23 @@ var wg sync.WaitGroup
 var multiThreads bool
 
 func main() {
-	var target, siteType string
+	var target, dict string
 	var verbose bool
 
-	flag.StringVar(&target, "target", "", "target domain name")
-	flag.StringVar(&siteType, "type", "", "site type : wp = wordpress")
+	flag.StringVar(&target, "t", "", "target domain name")
+	flag.StringVar(&dict, "d", "", "dictionnary path")
 	flag.BoolVar(&verbose, "v", false, "verbose mode. default : false")
 	flag.BoolVar(&multiThreads, "mt", false, "multi threads mode. default : false")
 	flag.Parse()
 
-	if target == "" || siteType == "" {
+	if target == "" || dict == "" {
 		fmt.Println("You didn't provide enough arguments. Refer to README.md to have the usage detail.")
 		return
 	}
 	startTime := time.Now()
 
-	list := getList(siteType)
-	fmt.Printf("\n"+time.Now().Format("15:04:05")+" -- Scan started on %s with %s list\n\n", target, siteType)
+	list := getList(dict)
+	fmt.Printf("\n"+time.Now().Format("15:04:05")+" -- Scan started on %s with %s\n\n", target, dict)
 
 	if multiThreads {
 		firstPart := list[:(len(list) / 2)]
@@ -76,8 +76,8 @@ func displayResult(statusCode int, target, url string, v bool) {
 }
 
 // getList creates and returns a string array based on the filename given in parameter
-func getList(siteType string) []string {
-	file, err := os.Open("lists/" + siteType + ".txt")
+func getList(dict string) []string {
+	file, err := os.Open(dict)
 
 	if err != nil {
 		log.Fatal(err)
