@@ -1,4 +1,4 @@
-# dir-scan :open_file_folder:
+# :open_file_folder: dir-scan 
 [![Go Report Card](https://goreportcard.com/badge/github.com/eze-kiel/dir-scan)](https://goreportcard.com/report/github.com/eze-kiel/dir-scan)
 
 dir-scan is a multi threads web content scanner. It launches a dictionnary-based attack to find existing and/or hidden web pages on a specific target.
