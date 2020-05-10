@@ -22,8 +22,9 @@ dir-scan is a multi threads web content scanner. It launches a dictionnary-based
 -w <time>
     Waiting time between requests to avoid flood, in milliseconds
 ```
+You have to at least provide a target and a dictionnary file to make it work.
 
-The `T` flag will separate the work into differents goroutines. It will also display results in an unalphabetical order, due to the list splitting.
+The `T` flag will separate the work into differents goroutines. It will also display results in an unalphabetical order due to the list splitting, but it will be faster.
 
 ## About lists
 If you need some lists, you should try [github.com/danielmiessler/SecLists](github.com/danielmiessler/SecLists).
