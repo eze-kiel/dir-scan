@@ -19,7 +19,7 @@ dir-scan is a multi threads web content scanner. It looks for existing and/or hi
 -v
     Verbose mode (display 404 status codes)
     Default : false
-    
+
 -mt
     Enable multi threading. It will create 2 threads
     Default : false
@@ -29,6 +29,6 @@ The `mt` flag will separate the work into 2 differents goroutines. It will also 
 
 ## About lists
 This tool uses lists which are inside the `lists/` folder.
-The lists used here are from github.com/danielmiessler/SecLists. You should definitely check his GitHub repo for a lot more lists for different purposes.
+The lists used here are from [github.com/danielmiessler/SecLists](github.com/danielmiessler/SecLists). You should definitely check his GitHub repo for a lot more lists for different purposes.
 
 You can add your own lists by copying them inside the `lists/` folder. They have to be .txt.
