@@ -5,26 +5,12 @@ dir-scan is a multi threads web content scanner. It launches a dictionnary-based
 
 ## Usage
 ```
--t <url>
-    The target's URL
-
--d <path-to-dict>
-   Dictionnary's path
-
--v
-    Verbose mode (display 404 status codes)
-    Default : false
-
--T <number-of-threads>
-    Number of threads that will be used
-    Default : 1
-
--w <time>
-    Waiting time between requests to avoid flood, in milliseconds
-
--to <timeout>
-    Client timeout, in seconds
-    Default : 4
+-d <path-to-dict> : Dictionnary's path
+-t <url> : The target's URL
+-to <timeout> : Client timeout, in seconds. Default : 4
+-T <number-of-threads> : Number of threads that will be used. Default : 1
+-v : Verbose mode (display 404 status codes). Default : false
+-w <time> : Waiting time between requests to avoid flood, in milliseconds
 ```
 You have to at least provide a target and a dictionnary file to make it work.
 
