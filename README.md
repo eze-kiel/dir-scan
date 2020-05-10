@@ -19,7 +19,7 @@ dir-scan is a multi threads web content scanner. It launches a dictionnary-based
     Enable multi threading. It will create 2 threads
     Default : false
 
--w
+-w <TIME>
     Waiting time between requests to avoid flood, in milliseconds
 ```
 
