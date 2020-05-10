@@ -19,9 +19,11 @@ var multiThreads bool
 func main() {
 	var target, dict string
 	var verbose bool
+	var wait int
 
 	flag.StringVar(&target, "t", "", "target domain name")
 	flag.StringVar(&dict, "d", "", "dictionnary path")
+	flag.IntVar(&wait, "w", 0, "waiting time between requests")
 	flag.BoolVar(&verbose, "v", false, "verbose mode. default : false")
 	flag.BoolVar(&multiThreads, "mt", false, "multi threads mode. default : false")
 	flag.Parse()
@@ -43,14 +45,14 @@ func main() {
 		secondPart := list[(len(list) / 2):]
 
 		wg.Add(1)
-		go checkURL(firstPart, target, verbose)
+		go checkURL(firstPart, target, verbose, wait)
 		wg.Add(1)
-		go checkURL(secondPart, target, verbose)
+		go checkURL(secondPart, target, verbose, wait)
 
 		wg.Wait()
 
 	} else {
-		checkURL(list, target, verbose)
+		checkURL(list, target, verbose, wait)
 	}
 
 	elapsedTime := time.Now().Sub(startTime)
@@ -100,7 +102,7 @@ func getList(dict string) []string {
 
 // checkURL is the core function : it calls contact to perform a GET request to the provided target with a specific path,
 // then calls displayResults.
-func checkURL(givenList []string, target string, verbose bool) {
+func checkURL(givenList []string, target string, verbose bool, wait int) {
 	if multiThreads {
 		defer wg.Done()
 	}
@@ -115,5 +117,8 @@ func checkURL(givenList []string, target string, verbose bool) {
 		}
 
 		displayResult(statusCode, target, url, verbose)
+		if wait != 0 {
+			time.Sleep(time.Duration(wait) * time.Millisecond)
+		}
 	}
 }

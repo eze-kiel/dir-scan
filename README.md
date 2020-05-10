@@ -18,6 +18,9 @@ dir-scan is a multi threads web content scanner. It launches a dictionnary-based
 -mt
     Enable multi threading. It will create 2 threads
     Default : false
+
+-w
+    Waiting time between requests to avoid flood, in milliseconds
 ```
 
 The `mt` flag will separate the work into 2 differents goroutines. It will also display results in an unalphabetical order, due to the list splitting.
