@@ -42,6 +42,7 @@ func main() {
 	fmt.Printf("THREADS : %d\n", threads)
 	fmt.Printf("-- Threads init\n\n")
 
+	// Create goroutines
 	for i := 0; i < threads; i++ {
 		min := (len(list) / threads) * i
 		max := (len(list) / threads) * (i + 1)
@@ -50,13 +51,17 @@ func main() {
 
 		logrus.Infof("thread %d created", i)
 	}
+
 	fmt.Printf("\n-- Scan started\n\n")
+
+	// Wait for all the goroutines to end
 	wg.Wait()
 
 	elapsedTime := time.Now().Sub(startTime)
 	fmt.Printf("\n-- Scan terminated in %v\n", elapsedTime)
 }
 
+// contact sends a request to a specified target
 func contact(target string) (int, error) {
 	resp, err := http.Get(target)
 	if err != nil {
@@ -110,7 +115,7 @@ func checkURL(givenList []string, target string, verbose bool, wait int) {
 		}
 		statusCode, err := contact(target + url)
 		if err != nil {
-			log.Fatalf("and error occured : %v\n", err)
+			logrus.Warnf("and error occured : %v\n", err)
 		}
 
 		displayResult(statusCode, target, url, verbose)
