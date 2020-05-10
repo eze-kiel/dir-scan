@@ -5,21 +5,21 @@ dir-scan is a multi threads web content scanner. It launches a dictionnary-based
 
 ## Usage
 ```
--t <URL>
+-t <url>
     The target's URL
 
--d <PATH-TO-DICT>
+-d <path-to-dict>
    Dictionnary's path
 
 -v
     Verbose mode (display 404 status codes)
     Default : false
 
--mt
-    Enable multi threading. It will create 2 threads
-    Default : false
+-T <number-of-threads>
+    Number of threads that will be used
+    Default : 1
 
--w <TIME>
+-w <time>
     Waiting time between requests to avoid flood, in milliseconds
 ```
 

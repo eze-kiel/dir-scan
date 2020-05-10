@@ -11,10 +11,11 @@ import (
 	"time"
 
 	"github.com/fatih/color"
+	"github.com/sirupsen/logrus"
 )
 
 var wg sync.WaitGroup
-var multiThreads bool
+var threads int
 
 func main() {
 	var target, dict string
@@ -24,8 +25,8 @@ func main() {
 	flag.StringVar(&target, "t", "", "target domain name")
 	flag.StringVar(&dict, "d", "", "dictionnary path")
 	flag.IntVar(&wait, "w", 0, "waiting time between requests")
+	flag.IntVar(&threads, "T", 1, "number of threads. default : 1")
 	flag.BoolVar(&verbose, "v", false, "verbose mode. default : false")
-	flag.BoolVar(&multiThreads, "mt", false, "multi threads mode. default : false")
 	flag.Parse()
 
 	if target == "" || dict == "" {
@@ -38,22 +39,19 @@ func main() {
 	fmt.Printf("\nTARGET : %s\n", target)
 	fmt.Printf("DICT : %s\n", dict)
 	fmt.Println("START TIME : " + time.Now().Format("15:04:05"))
+	fmt.Printf("THREADS : %d\n", threads)
 	fmt.Printf("-- Scan started\n\n")
 
-	if multiThreads {
-		firstPart := list[:(len(list) / 2)]
-		secondPart := list[(len(list) / 2):]
-
+	for i := 0; i < threads; i++ {
+		min := (len(list) / threads) * i
+		max := (len(list) / threads) * (i + 1)
 		wg.Add(1)
-		go checkURL(firstPart, target, verbose, wait)
-		wg.Add(1)
-		go checkURL(secondPart, target, verbose, wait)
+		go checkURL(list[min:max], target, verbose, wait)
 
-		wg.Wait()
-
-	} else {
-		checkURL(list, target, verbose, wait)
+		logrus.Infof("thread %d created", i)
 	}
+
+	wg.Wait()
 
 	elapsedTime := time.Now().Sub(startTime)
 	fmt.Printf("\n-- Scan terminated in %v\n", elapsedTime)
@@ -103,9 +101,8 @@ func getList(dict string) []string {
 // checkURL is the core function : it calls contact to perform a GET request to the provided target with a specific path,
 // then calls displayResults.
 func checkURL(givenList []string, target string, verbose bool, wait int) {
-	if multiThreads {
-		defer wg.Done()
-	}
+
+	defer wg.Done()
 
 	for _, url := range givenList {
 		if url[0] != '/' {
