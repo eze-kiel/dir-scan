@@ -21,6 +21,10 @@ dir-scan is a multi threads web content scanner. It launches a dictionnary-based
 
 -w <time>
     Waiting time between requests to avoid flood, in milliseconds
+
+-to <timeout>
+    Client timeout, in seconds
+    Default : 4
 ```
 You have to at least provide a target and a dictionnary file to make it work.
 

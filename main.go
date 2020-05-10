@@ -16,16 +16,18 @@ import (
 
 var wg sync.WaitGroup
 var threads int
+var client http.Client
 
 func main() {
 	var target, dict string
 	var verbose bool
-	var wait int
+	var wait, timeout int
 
 	flag.StringVar(&target, "t", "", "target domain name")
 	flag.StringVar(&dict, "d", "", "dictionnary path")
 	flag.IntVar(&wait, "w", 0, "waiting time between requests")
 	flag.IntVar(&threads, "T", 1, "number of threads. default : 1")
+	flag.IntVar(&timeout, "to", 4, "client timeout")
 	flag.BoolVar(&verbose, "v", false, "verbose mode. default : false")
 	flag.Parse()
 
@@ -33,6 +35,9 @@ func main() {
 		fmt.Println("You didn't provide enough arguments. Refer to README.md to have the usage detail.")
 		return
 	}
+
+	client.Timeout = time.Duration(timeout) * time.Second
+
 	startTime := time.Now()
 
 	list := getList(dict)
@@ -63,7 +68,7 @@ func main() {
 
 // contact sends a request to a specified target
 func contact(target string) (int, error) {
-	resp, err := http.Get(target)
+	resp, err := client.Get(target)
 	if err != nil {
 		return 0, err
 	}
@@ -76,8 +81,8 @@ func displayResult(statusCode int, target, url string, v bool) {
 	if statusCode >= 400 && statusCode <= 499 && v == true {
 		color.Red("%v : %s is not present\n", statusCode, target+url)
 	} else if statusCode >= 200 && statusCode <= 299 {
-		color.Green("%v : %s is present\n", statusCode, target+url)
-	} else if statusCode >= 500 && statusCode <= 599 {
+		color.Green("%v : %s\n", statusCode, target+url)
+	} else if statusCode >= 500 && statusCode <= 599 && v == true {
 		color.Magenta("%v : %s respond internal server error\n", statusCode, target+url)
 	}
 }
@@ -114,8 +119,8 @@ func checkURL(givenList []string, target string, verbose bool, wait int) {
 			url = "/" + url
 		}
 		statusCode, err := contact(target + url)
-		if err != nil {
-			logrus.Warnf("and error occured : %v\n", err)
+		if err != nil && verbose == true {
+			logrus.Warnf("an error occured : %v\n", err)
 		}
 
 		displayResult(statusCode, target, url, verbose)
