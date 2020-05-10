@@ -40,7 +40,7 @@ func main() {
 	fmt.Printf("DICT : %s\n", dict)
 	fmt.Println("START TIME : " + time.Now().Format("15:04:05"))
 	fmt.Printf("THREADS : %d\n", threads)
-	fmt.Printf("-- Scan started\n\n")
+	fmt.Printf("-- Threads init\n\n")
 
 	for i := 0; i < threads; i++ {
 		min := (len(list) / threads) * i
@@ -50,7 +50,7 @@ func main() {
 
 		logrus.Infof("thread %d created", i)
 	}
-
+	fmt.Printf("\n-- Scan started\n\n")
 	wg.Wait()
 
 	elapsedTime := time.Now().Sub(startTime)
