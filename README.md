@@ -6,7 +6,7 @@ dir-scan is a multi threads web content scanner. It launches a dictionnary-based
 ## Usage
 ```
 -target <URL>
-    The target URL
+    The target's URL
 
 -type <TYPE>
     The type of scan. Values can be : 
