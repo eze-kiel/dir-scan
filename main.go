@@ -60,7 +60,6 @@ func main() {
 func contact(target string) (int, error) {
 	resp, err := http.Get(target)
 	if err != nil {
-		// if webpage doesn't exits, I simplify it as a simple 404 code
 		return 0, err
 	}
 
