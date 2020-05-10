@@ -8,7 +8,7 @@ dir-scan is a multi threads web content scanner. It launches a dictionnary-based
 -t <URL>
     The target's URL
 
--d <PATH TO DICT>
+-d <PATH-TO-DICT>
    Dictionnary's path
 
 -v
